@@ -1,9 +1,11 @@
 package utilities;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ReusableMethods {
 
@@ -27,5 +29,26 @@ public class ReusableMethods {
 
 
         return donusturulenList;
+    }
+
+    public static void switchWindow(WebDriver driver, String goalUrl){
+
+        // birden fazla window acik iken bu method calisacak
+
+        // 1- acik olan tum window'larin WHD'lerini bir Set olarak kaydedelim
+        Set<String> allWHDs = driver.getWindowHandles();
+
+        // 2- bir for-each loop ile, her bir WHD'ini kullanip
+        //    o window'a gidelim, eger gittigimiz window'da Url hedefUrl'e esit ise
+        //    loop'u bitirelim
+
+
+        for ( String eachWHD : allWHDs ){
+            driver.switchTo().window(eachWHD);
+
+            if (driver.getCurrentUrl().equals(goalUrl)){
+                break;
+            }
+        }
     }
 }
